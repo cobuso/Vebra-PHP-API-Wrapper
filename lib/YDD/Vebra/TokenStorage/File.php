@@ -61,9 +61,12 @@ class File extends Base
 
     /**
      * Load the token from a file
+     *
+     * If the file doesn't exist yet, make an empty file.
      */
     protected function load()
     {
+        if (!file_exists($this->getFilename())) file_put_contents($this->getFilename(),'');
         if (false !== ($token = @file_get_contents($this->getFilename()))) {
             $this->token = trim($token);
         } else {
