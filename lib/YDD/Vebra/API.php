@@ -285,26 +285,22 @@ class API
     }
 
     /**
-     * get Property
+     * get PropertyByUrl
      *
-     * @param int $clientId   The client ID
-     * @param int $propertyId The property ID
+     * @param string $url     The property URL
      *
      * @throws InvalidArgumentException
      *
      * @return Property
+     *
      */
-    public function getProperty($clientId, $propertyId)
-    {
-        if (!is_int($clientId)) {
-            throw new \InvalidArgumentException('Client ID must be an integer.');
+    public function getPropertyByUrl($url) {
+
+        if (!is_string($url)) {
+            throw new \InvalidArgumentException('URL must be a string.');
         }
 
-        if (!is_int($propertyId)) {
-            throw new \InvalidArgumentException('Property ID must be an integer.');
-        }
-
-        $xml = $this->execute(sprintf('branch/%d/property/%d', $clientId, $propertyId));
+        $xml = $this->execute($url);
 
         $property = new Property;
         $property->setAttributes($xml->attributes());
@@ -425,6 +421,30 @@ class API
         $property->setFiles($arr);
 
         return $property;
+    }
+
+    /**
+     * get Property
+     *
+     * @param int $clientId   The client ID
+     * @param int $propertyId The property ID
+     *
+     * @throws InvalidArgumentException
+     *
+     * @return Property
+     */
+    public function getProperty($clientId, $propertyId)
+    {
+        if (!is_int($clientId)) {
+            throw new \InvalidArgumentException('Client ID must be an integer.');
+        }
+
+        if (!is_int($propertyId)) {
+            throw new \InvalidArgumentException('Property ID must be an integer.');
+        }
+
+        $url = sprintf('branch/%d/property/%d', $clientId, $propertyId);
+        return $this->getPropertyByUrl($url);
     }
 
     /**
