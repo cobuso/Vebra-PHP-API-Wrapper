@@ -388,7 +388,7 @@ class API
         foreach ($xml->paragraphs->paragraph as $p) {
             $paragraph = new Paragraph;
             $paragraph->setName(self::normalise($p->name, 'string'));
-            $paragraph->setFile(self::normalise($p->file, 'int'));
+            $paragraph->setFile($p->file->attributes()['ref']);
             $paragraph->setDimension(
                 new Dimension(
                     self::normalise($p->dimensions->metric, 'string'),
