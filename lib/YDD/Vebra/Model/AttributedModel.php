@@ -99,7 +99,7 @@ class AttributedModel
     public function setAttributes($attributes)
     {
         foreach ($attributes as $key => $value) {
-            $this->setAttribute($key, $value);
+            $this->setAttribute($key, (string)$value);
         }
 
         return $this;
